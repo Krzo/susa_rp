@@ -21,8 +21,7 @@
 		{"McLaren MP4 12C",80000,541},
 		{"Lexus IS300 Tunable ",100000,560},
 		{"BMW E92",60000,411},
-		{"Impala SS Tunable",100000,567},
-		{"Audi Q7",550000,579}
+		{"Impala SS Tunable",100000,567}
 	}
 	
 	local screenW, screenH = guiGetScreenSize()

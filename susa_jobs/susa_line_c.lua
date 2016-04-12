@@ -1,3 +1,4 @@
+addEvent("startDistanceCounter",true)
 Line = {
     button = {},
     window = {},
@@ -32,5 +33,20 @@ addEventHandler("onClientGUIClick",Line.button[2],
 	function()
 		guiSetVisible(Line.window[1],false)
 		showCursor(false)
+	end
+)
+
+addEventHandler("startDistanceCounter",root,
+	function(veh,x1,y1,z1)
+		local veh = getPedOccupiedVehicle ( lp )
+		if veh then
+			if getPedOccupiedVehicleSeat ( lp ) == 0 then
+				local x2, y2, z2 = getElementPosition ( veh )
+				local nd = getDistanceBetweenPoints3D ( x1, y1, z1, x2, y2, z2 ) / 100
+				KMDistance = KMDistance + nd
+				setTimer ( getDistanceTraveled, 500, 1, veh, x2, y2, z2 )
+				setElementData(veh,KMDistance)
+			end
+		end
 	end
 )

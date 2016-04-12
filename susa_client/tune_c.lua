@@ -14,28 +14,34 @@ gridlist:AddColumn("Tuning Shop San Fierro",250)
 			local id = getElementID(source)
 			local veh = getPedOccupiedVehicle(plr)
 			if plr == localPlayer then
-				if id == "17" and veh and getElementDimension(plr) == 0 then
-					showingshop = true
-					outputChatBox("Welcome in the San Fierro Tuning Shop!",0,180,0,false)
-					triggerServerEvent("onTuningJoin",localPlayer,localPlayer,veh)
-					setCameraMatrix(-2063.2409667969, 445.85540771484, 142.69630432129, -2063.6955566406, 444.99108886719, 142.48107910156)
-					addEventHandler("onClientRender",root,DrawTune)
-					showCursor(true)
-					gridlist:SetVisible(true)
-					--[[for i,v in ipairs(tuningparts) do
-						gridlist:AddItem(1,tuningparts[i],255,255,255)
-					end--]]
-					gridlist:AddItem(1,"Color",_,255,255,255)
-					local upgrades = getVehicleCompatibleUpgrades ( veh )
-					for _, upgrade in pairs ( upgrades ) do
-						local name = getVehicleUpgradeSlotName ( upgrade )
-						outputChatBox(name..":"..upgrade)
-						gridlist:AddItem(1,name,{upgrade,math.random(1000,2000)},255,255,255)
-					end
-					gridlist:AddItem(1,"Remove Parts",_,255,255,255)
-					exports.cpicker:openPicker(veh,"#ff9900","Pick a color for your vehicle")
-				else
-					outputChatBox("You need a car to enter the tuning shop.",255,24,24,false)
+				if id == "17" then
+					if veh then
+						if getElementData(plr,"susa:tuning") == 1 then
+							showingshop = true
+							outputChatBox("Welcome in the San Fierro Tuning Shop!",0,180,0,false)
+							triggerServerEvent("onTuningJoin",localPlayer,localPlayer,veh)
+							setCameraMatrix(-2063.2409667969, 445.85540771484, 142.69630432129, -2063.6955566406, 444.99108886719, 142.48107910156)
+							addEventHandler("onClientRender",root,DrawTune)
+							showCursor(true)
+							gridlist:SetVisible(true)
+							--[[for i,v in ipairs(tuningparts) do
+								gridlist:AddItem(1,tuningparts[i],255,255,255)
+							end--]]
+							gridlist:AddItem(1,"Color","Color",255,255,255)
+							local upgrades = getVehicleCompatibleUpgrades ( veh )
+							for _, upgrade in pairs ( upgrades ) do
+								local name = getVehicleUpgradeSlotName ( upgrade )
+								outputChatBox(name..":"..upgrade)
+								gridlist:AddItem(1,name,{upgrade,math.random(1000,2000)},255,255,255)
+							end
+							gridlist:AddItem(1,"Remove Parts",_,255,255,255)
+							--exports.cpicker:openPicker(veh,"#ff9900","Pick a color for your vehicle")
+						else
+							outputChatBox("You don't have the tuning licence, you can get it from the town hall.",255,24,24,false)
+						end
+					else
+						outputChatBox("You need a car to enter the tuning shop.",255,24,24,false)
+					end				
 				end
 			end
 		end
@@ -51,7 +57,6 @@ gridlist:AddColumn("Tuning Shop San Fierro",250)
 					angle = angle + 35
 					if angle >= 359 then angle = 0 end
 				end
-				outputChatBox(angle)
 			end
 		end
 	)
@@ -62,8 +67,9 @@ gridlist:AddColumn("Tuning Shop San Fierro",250)
 				local index = gridlist:GetSelectedItem()
 				if index ~= -1 then
 					local selectedpart,data = gridlist:GetItemDetails(1,index)
-					local id = data[1]
-					local price = data[2]					
+					local id = data[1] or 0
+					local price = data[2] or 0
+					outputChatBox("price:"..price)
 					outputChatBox("You added: "..selectedpart.." to your car. ID of this part: "..id,0,180,0,false )
 					local veh = getPedOccupiedVehicle(localPlayer)
 					--[[if selectedpart == "Hydraulics" and selectedpart ~= nil then
@@ -75,7 +81,11 @@ gridlist:AddColumn("Tuning Shop San Fierro",250)
 						triggerServerEvent("onTuningPartSelected",localPlayer,localPlayer,veh,id,price)
 					elseif selectedpart == "Remove Parts" then
 						triggerServerEvent("onTuningPartsRemove",localPlayer,localPlayer,veh)
+					elseif selectedpart == "Color" then	
+						outputChatBox("COLORRR")
+						exports.cpicker:openPicker(veh,"#ff9900","Pick a color for your vehicle")					
 					end
+					outputChatBox(selectedpart)
 				end
 			else
 				selectedpart = nil
@@ -115,8 +125,13 @@ gridlist:AddColumn("Tuning Shop San Fierro",250)
 	)
 	
 	addEventHandler("onColorPickerChange",root,
-		function(element,hex,r,g,b)
-			setVehicleColor(element, r, g, b)
+		function(veh,hex,r,g,b)
+			setVehicleColor(veh, r, g, b)
+		end
+	)
+	addEventHandler("onColorPickerOK",root,
+		function(veh,hex,r,g,b)
+			setVehicleColor(veh, r, g, b)
 		end
 	)
 	

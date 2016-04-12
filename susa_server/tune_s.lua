@@ -4,7 +4,7 @@ addEvent("onTuningJoin",true)
 addEvent("onTuningLeave",true)
 addEvent("onTuningPartSelected",true)
 addEvent("onTuningPartsRemove",true)
-local dimension = 90
+local dimension = 6000
 local tuneinterior = {
 	{6959, -2060.5, 446.39999, 138.8},
 	{6959, -2076.1001, 446, 138.8, 0, 90, 0},
@@ -12,7 +12,7 @@ local tuneinterior = {
 	{1080, -2076.1001, 433.20001, 141.5 },
 	{1078, -2072.8999, 428.89999, 142.7, 0, 0, 90},
 	{14826, -2073.3999, 433.29999, 139.5, 0, 0, 287.478}
-}	
+}
 
 addEventHandler("onTuningJoin",root,
 	function(plr,veh)
@@ -41,7 +41,7 @@ addEventHandler("onTuningLeave",root,
 		setElementFrozen(plr,false)
 		setElementDimension(plr,0)
 		toggleControl(plr,"enter_exit",true)
-		toggleAllControls(plr,true,true,true)	
+		toggleAllControls(plr,true,true,true)
 		setVehicleEngineState(veh,true)
 		setElementPosition(veh, -1958.4428710938, 221.25570678711, 32.252658843994)
 		setElementRotation(veh, 7.4617896080017, -4.2971258163452, 87.149810791016)
@@ -54,9 +54,14 @@ addEventHandler("onTuningPartSelected",root,
 	function(plr,veh,id,price)
 		if client ~= source then return end
 		local money = getPlayerMoney(plr)
-		if veh and id ~= nil or id ~= 0 then
-			addVehicleUpgrade(veh,id)
-			setPlayerMoney(plr,money-price)
+		local upgr = getVehicleUpgrades(veh)
+		for k,v in ipairs(upgr) do
+			if veh and id ~= nil or id ~= 0 and id ~= v then
+				addVehicleUpgrade(veh,id)
+				setPlayerMoney(plr,money-price)
+			elseif veh and id ~= nil or i~= 0 and id == v then
+				removeVehicleUpgrade(veh,id)
+			end
 		end
 		outputChatBox(price,plr)
 	end
@@ -73,6 +78,10 @@ addEventHandler("onTuningPartsRemove",root,
 	end
 )
 
+addEventHandler("saveTuningParts",root,
+	function()
+	end
+)
 --[[addEventHandler("onClientHydraulics",root,
 	function(plr,veh)
 		if client ~= source then return end
@@ -86,7 +95,7 @@ addEventHandler("onTuningPartsRemove",root,
 				addVehicleUpgrade(veh,1087)
 				outputChatBox("You succesfully upgraded your car. You now have: #ffffffhydraulics.",plr,0,180,0,true)
 			end
-		end			
+		end
 	end
 )
 addEventHandler("onClientSpoiler",root,

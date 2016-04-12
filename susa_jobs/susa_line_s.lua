@@ -7,15 +7,22 @@ addEventHandler("StartJob",root,
 		if taxi == 1 then
 			local veh = createVehicle(420,-2082.5,66.2998046875,34,0,0,90,"SUSALINE")
 			setElementData(veh,"Owner",username)
-			getDistanceTraveled(veh,-2082.5,66.2998046875,34)
+			triggerClientEvent(plr,"startDistanceCounter",plr,veh,-2082.5,66.2998046875,34)
 			warpPedIntoVehicle(plr,veh)
 		elseif taxi == 0 then
-			outputChatBox("You didn't select this job. Please go to the city hall and select the taxi job",plr,255,24,24,false)
+			outputChatBox("You didn't select this job. Please go to the town hall and select the taxi job.",plr,255,24,24,false)
+		elseif bus == 1 then
+			local veh = createVehicle(431,-2080.89331, 61.22795, 33.76588,0,0,90,"SUSABUS")
+			setElementData(veh,"Owner",username)
+			getDistanceTraveled(veh,-2080.89331, 61.22795, 33.76588)
+			warpPedIntoVehicle(plr,veh)
+		elseif bus == 0 then
+			outputChatBox("You didn't select this job. Please go to the town hall and select the bus job.",plr,255,24,24,false)
 		end
 	end
 )
 
-
+--[[
 function getDistanceTraveled ( veh, x1, y1, z1 )
 	local veh = getPedOccupiedVehicle ( lp )
 	if veh then
@@ -28,3 +35,4 @@ function getDistanceTraveled ( veh, x1, y1, z1 )
 		end
 	end
 end
+]]

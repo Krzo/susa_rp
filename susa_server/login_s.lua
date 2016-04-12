@@ -16,6 +16,12 @@
 					setElementData(p,"username",string.lower(username))
 					setElementData(p,"susa:b_licence",0)
 					setElementData(p,"susa:d_licence",0)
+					setElementData(p,"susa:d_licence",0)
+					setElementData(p,"susa:b_licence",0)
+					setElementData(p,"susa:taxi",0)
+					setElementData(p,"susa:trash",0)
+					setElementData(p,"susa:bus",0)
+					setElementData(p,"susa:tuning",0)
 					triggerClientEvent(p,"saveLoginToXML",getRootElement(),username,password)
 				end
 			else
@@ -25,9 +31,9 @@
 	end
 	addEvent("RegisterEvent",true)
 	addEventHandler("RegisterEvent",root,RegisterFunc)
-	
+
 	function LoginFunc(p,username,password)
-		if not(p ~= client) then	
+		if not(p ~= client) then
 			local t
 			local username = string.lower(username)
 			query = dbQuery(db, "SELECT * FROM accounts WHERE username = '"..username.."'")
@@ -44,26 +50,34 @@
 					local drft = datas.drift
 					local inte = datas.inte
 					local dim = datas.dim
-					local d_licence = datas.d_licence
-					local b_licence = datas.b_licence
+					local d_licence = datas.d_licence or 0
+					local b_licence = datas.b_licence or 0
+					local bus_licence = datas.bus_licence or 0
+					local taxi_licence = datas.taxi_licence or 0
+					local trashman_licence = datas.trashman_licence or 0
+					local tuning_licence = datas.tuning_licence or 0
 					setElementData(p,"susa:d_licence",d_licence)
 					setElementData(p,"susa:b_licence",b_licence)
+					setElementData(p,"susa:taxi",taxi_licence)
+					setElementData(p,"susa:trash",trashman_licence)
+					setElementData(p,"susa:bus",bus_licence)
+					setElementData(p,"susa:tuning",tuning_licence)
 					setElementData(p,"loggedIN",true)
 					setElementData(p,"username",string.lower(username))
-					if tp and tp ~= nil then	
+					if tp and tp ~= nil then
 						t = getTeamFromName(tp)
 					else
 						t = nil
 					end
 					triggerClientEvent(p,"saveLoginToXML",getRootElement(),username,password)
 					local name = string.gsub(getPlayerName(p), "#%x%x%x%x%x%x", "")
-					outputChatBox("You succcessfully logged in. Welcome, "..name.."",p,24,255,24)	
+					outputChatBox("You succcessfully logged in. Welcome, "..name.."",p,24,255,24)
 					spawnPlayer(p,x,y,z,0,skin,inte,dim)
 					setPlayerTeam(p,tp)
 					setPlayerMoney(p,m)
 					setElementDimension(p,dim)
 					setElementInterior(p,inte)
-					setElementModel(p,tonumber(s))				
+					setElementModel(p,tonumber(s))
 				else
 					outputChatBox("Your password is not correct!",p,255,24,24)
 
@@ -75,7 +89,7 @@
 	end
 	addEvent("LoginEvent",true)
 	addEventHandler("LoginEvent", root, LoginFunc)
-	
+
 	function onQuit ()
 		local data = getElementData(source,"loggedIN")
 		local username = getElementData(source,"username")
@@ -89,7 +103,7 @@
 		end
 	end
 	addEventHandler ("onPlayerQuit", root, onQuit)
-	
+
 		function onStop ()
 		for _,v in ipairs(getElementsByType("player")) do
 			local data = getElementData(v,"loggedIN")
@@ -105,4 +119,3 @@
 		end
 	end
 	addEventHandler ("onResourceStop", resourceRoot, onStop)
-	

@@ -170,6 +170,16 @@ addEventHandler("CarBuy",root,CarBuyFunc)
 			end
 		end
 	)
+	
+	addEventHandler("onVehicleExplode",root,
+		function()
+			local owner = getElementData(source,"Owner")
+			if owner ~= "" then
+				dbExec(db,"DELETE FROM cars WHERE OWNER=?",pName )
+			end
+			
+		end
+	)
 
 	function park_func(player, cmd )
 	local pName = getElementData(player,"username")
@@ -195,7 +205,9 @@ addEventHandler("CarBuy",root,CarBuyFunc)
 		local sql = dbQuery(db, "SELECT * FROM cars WHERE OWNER = ?", owner )
 		local result, num_rows = dbPoll(sql, -1)
 		if num_rows == 1 then
-			dbExec(db, "UPDATE cars SET SPAWNX=?, SPAWNY=?, SPAWNZ=?, ROTX=?, ROTY=?, ROTZ=?,R=?,G=?,B=? WHERE OWNER=?", posx, posy, posz, rotx, roty, rotz,r,g,b,owner)
+			if owner ~= "" then
+				dbExec(db, "UPDATE cars SET SPAWNX=?, SPAWNY=?, SPAWNZ=?, ROTX=?, ROTY=?, ROTZ=?,R=?,G=?,B=? WHERE OWNER=?", posx, posy, posz, rotx, roty, rotz,r,g,b,owner)
+			end
 		end
 	end
 	
@@ -214,15 +226,19 @@ addEventHandler("CarBuy",root,CarBuyFunc)
 	function GetPosCar(plr)
 		local pName = getElementData(plr,"username")
 		for _, veh in pairs ( getElementsByType("vehicle") ) do 
-			if(tostring(getElementData(veh, "Owner")) == tostring(pName)) then
-				local x,y,z = getElementPosition(veh)
-				local city = getZoneName(x,y,z,true)
-				local cityZone = getZoneName(x,y,z)
-				local vehName = getVehicleName(veh)
-				outputChatBox("Car Position of "..vehName.." : "..cityZone.." ( "..city.." ) | "..math.floor(x).." , "..math.floor(y).." , "..math.floor(z),plr,200,200,0,false)
-				createBlipAttachedTo(veh,55,0.5,255,255,255,255,0,99999,plr)
-			else
-				outputChatBox("You don't own a car!",plr,180,0,0,false)
+			local owner = tostring(getElementData(veh, "Owner"))
+			if (owner ~= "") then
+				if(owner == tostring(pName)) then
+					local x,y,z = getElementPosition(plr)
+					--[[local city = getZoneName(x,y,z,true)
+					local cityZone = getZoneName(x,y,z)
+					local vehName = getVehicleName(veh)
+					outputChatBox("Car Position of "..vehName.." : "..cityZone.." ( "..city.." ) | "..math.floor(x).." , "..math.floor(y).." , "..math.floor(z),plr,200,200,0,false)--]]
+					--createBlipAttachedTo(veh,55,0.5,255,255,255,255,0,99999,plr)
+					setElementPosition(veh,x,y,z+3)
+					warpPedIntoVehicle(plr,veh)
+					break
+				end
 			end
 		end
 	end

@@ -15,7 +15,9 @@
 	<script src="susa_client/misc_c.lua" type="client" />
 	<script src="susa_client/cars_c.lua" type="client" />
 	<script src="susa_client/tune_c.lua" type="client" />
-	
+	<script src="susa_jobs/susa_line_c.lua" type="client" />
+	<script src="susa_jobs/susa_recycling_c.lua" type="client" />
+	<script src="susa_house/house_client.lua" type="client" />
 
 	
 	<!-- SERVER FILES -->
@@ -26,6 +28,7 @@
 	<script src="susa_server/sql_s.lua" type="server" />
 	<script src="susa_server/tune_s.lua" type="server" />
 	<script src="susa_jobs/susa_line_s.lua" type="server" />
+	<script src="susa_house/house_server.lua" type="server" />
 	
 	<!-- MAP FILES -->
 	<map src="susa_map/trainstation.map" />
@@ -39,6 +42,37 @@
 	
 	<file src="susa_data/BlurShader.fx" /> 
 	<file src="susa_data/texreplace.fx" />
+	
+	<file src="susa_house/data/images/1.jpg" /> <!-- HOUSE INTERIOR IMAGES -->
+	<file src="susa_house/data/images/2.jpg" />
+	<file src="susa_house/data/images/3.jpg" />
+	<file src="susa_house/data/images/4.jpg" />
+	<file src="susa_house/data/images/5.jpg" />
+	<file src="susa_house/data/images/6.jpg" />
+	<file src="susa_house/data/images/7.jpg" />
+	<file src="susa_house/data/images/8.jpg" />
+	<file src="susa_house/data/images/9.jpg" />
+	<file src="susa_house/data/images/10.jpg" />
+	<file src="susa_house/data/images/11.jpg" />
+	<file src="susa_house/data/images/12.jpg" />
+	<file src="susa_house/data/images/13.jpg" />
+	<file src="susa_house/data/images/14.jpg" />
+	<file src="susa_house/data/images/15.jpg" />
+	<file src="susa_house/data/images/16.jpg" />
+	<file src="susa_house/data/images/17.jpg" />
+	<file src="susa_house/data/images/18.jpg" />
+	<file src="susa_house/data/images/19.jpg" />
+	<file src="susa_house/data/images/20.jpg" />
+	<file src="susa_house/data/images/21.jpg" />
+	<file src="susa_house/data/images/22.jpg" />
+	<file src="susa_house/data/images/23.jpg" />
+	<file src="susa_house/data/images/24.jpg" />
+	<file src="susa_house/data/images/25.jpg" />
+	<file src="susa_house/data/images/26.jpg" />
+	<file src="susa_house/data/images/27.jpg" />
+	<file src="susa_house/data/images/28.jpg" />
+	<file src="susa_house/data/images/29.jpg" />
+	<file src="susa_house/data/images/choose.jpg" />
 	
 	<file src="susa_data/carsys/bg.png" />	<!-- CAR SHOP FILES -->
     <file src="susa_data/carsys/banshee.png" />
