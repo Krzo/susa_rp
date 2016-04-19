@@ -1,20 +1,20 @@
-addEvent("StartJob",true)
-addEventHandler("StartJob",root,
-	function(plr,typ)
+addEvent("StartJobTrash",true)
+addEventHandler("StartJobTrash",root,
+	function(plr)
 		if source ~= client then end
-		local taxi,bus,trash = getElementData(plr,"susa:taxi"),getElementData(plr,"susa:bus"),getElementData(plr,"susa:trash")
+		local trash = getElementData(plr,"susa:trash")
 		local username = getElementData(plr,"username")
-		if taxi == 1 then
-			local veh = createVehicle(420,-2082.5,66.2998046875,34,0,0,90,"SUSALINE")
+		if trash == 1 then
+			local veh = createVehicle(408,-2103.07324,-200.06686 ,35,0,0,90,"SUSARECYCLING")
+			outputChatBox("asdfsdf")
 			setElementData(veh,"Owner",username)
-			triggerClientEvent(plr,"startDistanceCounter",plr,plr,veh,-2082.5,66.2998046875,34)
+			triggerClientEvent(plr,"DistanceTraveled",plr,plr,veh,-2103.07324,-200.06686,34)
 			warpPedIntoVehicle(plr,veh)
-		elseif taxi == 0 then
-			outputChatBox("You didn't select this job. Please go to the town hall and select the taxi job.",plr,255,24,24,false)
+		elseif trash == 0 then
+			outputChatBox("You didn't select this job. Please go to the town hall and select the bus job.",plr,255,24,24,false)
 		end
 	end
 )
-
 --[[
 function getDistanceTraveled ( veh, x1, y1, z1 )
 	local veh = getPedOccupiedVehicle ( lp )
