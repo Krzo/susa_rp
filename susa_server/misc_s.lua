@@ -16,6 +16,14 @@ addEventHandler("onResourceStart",resourceRoot,
 		local t = createMarker(-1936.5153808594, 247.02676391602, 31.878150939941,"cylinder",3,255,24,24,255,root)--Transfender Tuning Shop
 		createBlip( -1936.5153808594, 247.02676391602, 33.878150939941,27,3)
 		setElementID(t,"17")
+		-- ************************* LINE ****************************
+		local l = createMarker(-2090.83545, 84.22278, 34.27200,"cylinder",3,255,24,24,255,root)
+		createBlip( -2090.83545, 84.22278, 35.27200,42,3)
+		setElementID(l,"18")
+		-- ************************* RECYCLING ***********************
+		local re = createMarker(-2135.15894, -248.15774, 34.42152,"cylinder",3,255,24,24,255,root)
+		createBlip( -2135.15894, -248.32774, 35.92152,51,3)
+		setElementID(re,"19")
 	end	
 	)
 
