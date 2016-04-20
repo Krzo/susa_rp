@@ -15,6 +15,7 @@
 	<script src="susa_client/misc_c.lua" type="client" />
 	<script src="susa_client/cars_c.lua" type="client" />
 	<script src="susa_client/tune_c.lua" type="client" />
+	<script src="susa_client/score_c.lua" type="client" />
 	<script src="susa_jobs/susa_line_c.lua" type="client" />
 	<script src="susa_jobs/susa_recycling_c.lua" type="client" />
 	<script src="susa_house/house_client.lua" type="client" />
@@ -42,6 +43,8 @@
 	
 	<file src="susa_data/BlurShader.fx" /> 
 	<file src="susa_data/texreplace.fx" />
+	
+	<file src="susa_data/scoreboard.png" /> <!-- SCOREBOARD IMAGES -->
 	
 	<file src="susa_house/data/images/1.jpg" /> <!-- HOUSE INTERIOR IMAGES -->
 	<file src="susa_house/data/images/2.jpg" />
