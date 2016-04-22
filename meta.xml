@@ -4,21 +4,15 @@
 	<!-- DEFINITIONS AND DECLARATIONS -->
 	<oop>false</oop>
 	<download_priority_group>1</download_priority_group>
-	<include resource="cpicker" />
 	
 	<!-- CLIENT FILES -->
-	<script src="guilib.lua" type="client" />
 	<script src="dxlib.lua" type="client" />
-	<script src="dxGridlists.lua" type="client" />
 	<script src="susa_client/login_c.lua" type="client" />
 	<script src="susa_client/jobs_c.lua" type="client" />
 	<script src="susa_client/misc_c.lua" type="client" />
-	<script src="susa_client/cars_c.lua" type="client" />
-	<script src="susa_client/tune_c.lua" type="client" />
-	<script src="susa_client/score_c.lua" type="client" />
 	<script src="susa_jobs/susa_line_c.lua" type="client" />
 	<script src="susa_jobs/susa_recycling_c.lua" type="client" />
-	<script src="susa_house/house_client.lua" type="client" />
+	<script src="susa_client/drivinglicence_c.lua" type="client" />
 
 	
 	<!-- SERVER FILES -->
@@ -26,63 +20,20 @@
 	<script src="susa_server/misc_s.lua" type="server" />
 	<script src="susa_server/cars_s.lua" type="server" />
 	<script src="susa_server/jobs_s.lua" type="server" />
-	<script src="susa_server/sql_s.lua" type="server" />
-	<script src="susa_server/tune_s.lua" type="server" />
+	<script src="susa_server/misc_s.lua" type="server" />
 	<script src="susa_jobs/susa_line_s.lua" type="server" />
-	<script src="susa_house/house_server.lua" type="server" />
-	
+	<script src="susa_jobs/susa_recycling_s.lua" type="server" />
+
 	<!-- MAP FILES -->
 	<map src="susa_map/trainstation.map" />
-	<file src="susa_data/sfgarage/oldgarage_sfse.txd" /> 
-    <file src="susa_data/sfgarage/hubint1_sfse.txd" /> 
 	
 	<!-- FILES -->
-	<file src="susa_data/login_form.png" type="client" /><!-- LOGIN (BLUR) FILES -->
+	<file src="susa_data/login_form.png" type="client" />
 	<file src="susa_data/login.png" type="client" />
 	<file src="susa_data/reg.png" type="client" />
 	
-	<file src="susa_data/BlurShader.fx" /> 
+	<file src="susa_data/BlurShader.fx" /> <!-- LOGIN BLUR FILES -->
 	<file src="susa_data/texreplace.fx" />
-	
-	<file src="susa_data/scoreboard.png" /> <!-- SCOREBOARD IMAGES -->
-	
-	<file src="susa_house/data/images/1.jpg" /> <!-- HOUSE INTERIOR IMAGES -->
-	<file src="susa_house/data/images/2.jpg" />
-	<file src="susa_house/data/images/3.jpg" />
-	<file src="susa_house/data/images/4.jpg" />
-	<file src="susa_house/data/images/5.jpg" />
-	<file src="susa_house/data/images/6.jpg" />
-	<file src="susa_house/data/images/7.jpg" />
-	<file src="susa_house/data/images/8.jpg" />
-	<file src="susa_house/data/images/9.jpg" />
-	<file src="susa_house/data/images/10.jpg" />
-	<file src="susa_house/data/images/11.jpg" />
-	<file src="susa_house/data/images/12.jpg" />
-	<file src="susa_house/data/images/13.jpg" />
-	<file src="susa_house/data/images/14.jpg" />
-	<file src="susa_house/data/images/15.jpg" />
-	<file src="susa_house/data/images/16.jpg" />
-	<file src="susa_house/data/images/17.jpg" />
-	<file src="susa_house/data/images/18.jpg" />
-	<file src="susa_house/data/images/19.jpg" />
-	<file src="susa_house/data/images/20.jpg" />
-	<file src="susa_house/data/images/21.jpg" />
-	<file src="susa_house/data/images/22.jpg" />
-	<file src="susa_house/data/images/23.jpg" />
-	<file src="susa_house/data/images/24.jpg" />
-	<file src="susa_house/data/images/25.jpg" />
-	<file src="susa_house/data/images/26.jpg" />
-	<file src="susa_house/data/images/27.jpg" />
-	<file src="susa_house/data/images/28.jpg" />
-	<file src="susa_house/data/images/29.jpg" />
-	<file src="susa_house/data/images/choose.jpg" />
-	
-	<file src="susa_data/carsys/bg.png" />	<!-- CAR SHOP FILES -->
-    <file src="susa_data/carsys/banshee.png" />
-    <file src="susa_data/carsys/bullet.png" />
-    <file src="susa_data/carsys/cheetah.png" />
-    <file src="susa_data/carsys/inf.png" />
-    <file src="susa_data/carsys/exit.png" />
 	
 	<file src="susa_data/wheels/J2_wheels.txd" /> <!-- WHEEL FILES -->
     <file src="susa_data/wheels/wheel_gn1.dff" />
