@@ -18,18 +18,16 @@ pricecol = guiGridListAddColumn(Town_Hall.gridlist[1], "Price/Salary", 0.5)
 for i = 0, 10 do
 guiGridListAddRow(Town_Hall.gridlist[1])
 end
-guiGridListSetItemText(Town_Hall.gridlist[1], 0, 1, "Driving Licence", false, false)
-guiGridListSetItemText(Town_Hall.gridlist[1], 0, 2, "1800 $", false, false)
-guiGridListSetItemText(Town_Hall.gridlist[1], 5, 1, "Tuning License", false, false)
-guiGridListSetItemText(Town_Hall.gridlist[1], 5, 2, "8000 $", false, false)
-guiGridListSetItemText(Town_Hall.gridlist[1], 1, 1, "Boat Licence", false, false)
-guiGridListSetItemText(Town_Hall.gridlist[1], 1, 2, "3400 $", false, false)
-guiGridListSetItemText(Town_Hall.gridlist[1], 2, 1, "Taxi-driver", false, false)
-guiGridListSetItemText(Town_Hall.gridlist[1], 2, 2, "60 cent/km", false, false) --Taxistation -> CAN
-guiGridListSetItemText(Town_Hall.gridlist[1], 3, 1, "trashman", false, false)
-guiGridListSetItemText(Town_Hall.gridlist[1], 3, 2, "1950 $", false, false)
-guiGridListSetItemText(Town_Hall.gridlist[1], 4, 1, "Bus-driver", false, false)
-guiGridListSetItemText(Town_Hall.gridlist[1], 4, 2, "40 cent/marker", false, false)
+guiGridListSetItemText(Town_Hall.gridlist[1], 4, 1, "Tuning License", false, false)
+guiGridListSetItemText(Town_Hall.gridlist[1], 4, 2, "8000 $", false, false)
+guiGridListSetItemText(Town_Hall.gridlist[1], 0, 1, "Boat Licence", false, false)
+guiGridListSetItemText(Town_Hall.gridlist[1], 0, 2, "3400 $", false, false)
+guiGridListSetItemText(Town_Hall.gridlist[1], 1, 1, "Taxi-driver", false, false)
+guiGridListSetItemText(Town_Hall.gridlist[1], 1, 2, "60 cent/km", false, false) --Taxistation -> CAN
+guiGridListSetItemText(Town_Hall.gridlist[1], 2, 1, "trashman", false, false)
+guiGridListSetItemText(Town_Hall.gridlist[1], 2, 2, "1950 $", false, false)
+guiGridListSetItemText(Town_Hall.gridlist[1], 3, 1, "Bus-driver", false, false)
+guiGridListSetItemText(Town_Hall.gridlist[1], 3, 2, "40 cent/marker", false, false)
 Town_Hall.label[1] = guiCreateLabel(226, 29, 120, 80, "Welcome in the town hall of SUSA RP. Here you can buy Licences such as driving or boat Licences.", false, Town_Hall.window[1])
 guiLabelSetHorizontalAlign(Town_Hall.label[1], "left", true)
 Town_Hall.button[1] = guiCreateButton(236, 201, 108, 36, "Leave", false, Town_Hall.window[1])
@@ -60,20 +58,6 @@ guiSetFont(Town_Hall.button[2], "default-bold-small")
 	local money = getPlayerMoney(localPlayer)
 	local row,col = guiGridListGetSelectedItem(Town_Hall.gridlist[1])
 		if row == 0 then
-			if getElementData(localPlayer,"susa:d_licence") == 0 then
-				if money >= 1800 then
-					local money = money-3400
-
-					triggerServerEvent("licence",localPlayer,localPlayer,1,money)
-					setPlayerMoney(money-1800,false)
-					outputChatBox("You successfully bought your driving licence",24,255,24)
-				else
-					outputChatBox("You don't have enough money for this licence. You need 1800$",255,24,24)
-				end
-			else
-				outputChatBox("You already own this licence!",255,24,24)
-			end
-		elseif row == 1 then
 			if getElementData(localPlayer,"susa:b_licence") == 0 then
 				if money >= 3400 then
 
@@ -86,7 +70,7 @@ guiSetFont(Town_Hall.button[2], "default-bold-small")
 			else
 				outputChatBox("You already own this licence!",255,24,24)
 			end
-		elseif row == 2 then
+		elseif row == 1 then
 			if getElementData(localPlayer,"susa:taxi") == 0 and getElementData(localPlayer,"susa:trash") == 0 and getElementData(localPlayer,"susa:bus") == 0 then
 
 					outputChatBox("You successfully started the Job",24,255,24)
@@ -94,7 +78,7 @@ guiSetFont(Town_Hall.button[2], "default-bold-small")
 			else
 				outputChatBox("You already have a Job!",255,24,24)
 			end
-		elseif row == 3 then
+		elseif row == 2 then
 			if getElementData(localPlayer,"susa:trash") == 0  and getElementData(localPlayer,"susa:taxi") ==0 and getElementData(localPlayer,"susa:bus") == 0 then
 
 					outputChatBox("You successfully started the Job",24,255,24)
@@ -102,7 +86,7 @@ guiSetFont(Town_Hall.button[2], "default-bold-small")
 			else
 				outputChatBox("You already have a Job!",255,24,24)
 			end
-		elseif row == 4 then
+		elseif row == 3 then
 			if getElementData(localPlayer,"susa:bus") == 0 and getElementData(localPlayer,"susa:taxi") == 0 and getElementData(localPlayer,"susa:trash") == 0 then
 
 					outputChatBox("You successfully started the Job",24,255,24)
@@ -110,7 +94,7 @@ guiSetFont(Town_Hall.button[2], "default-bold-small")
 			else
 				outputChatBox("You already have a Job!",255,24,24)
 			end
-		elseif row == 5 then
+		elseif row == 4 then
 			if getElementData(localPlayer,"susa:tuning") == 0 or getElementData(localPlayer,"susa:tuning") == false then
 				if getElementData(localPlayer,"susa:d_licence") == 1 then
 					if money >= 8000 then
