@@ -24,9 +24,13 @@ addEventHandler("onResourceStart",resourceRoot,
 		local re = createMarker(-2135.15894, -248.15774, 34.42152,"cylinder",3,255,24,24,255,root)
 		createBlip( -2135.15894, -248.32774, 35.92152,51,3)
 		setElementID(re,"19")
+		-- ************************* DrivingLicence ***********************
+		local dl = createMarker(-2026.59656, -100.73959, 33.42152,"cylinder",3,255,24,24,255,root)
+		createBlip( -2026.59656, -100.73959, 35.92152,24,3)
+		setElementID(dl,"20")
 	end	
 	)
-
+	
 	function syncTime()
 		local realTime = getRealTime()
 		local hour = realTime.hour
