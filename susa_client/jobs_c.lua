@@ -7,7 +7,7 @@ Town_Hall = {
     label = {}
 }
 
-local screenW, screenH = guiGetScreenSize() 
+local screenW, screenH = guiGetScreenSize()
 Town_Hall.window[1] = guiCreateWindow((screenW - 356) / 2, (screenH - 247) / 2, 356, 247, "Town Hall", false)
 guiWindowSetMovable(Town_Hall.window[1], false)
 guiWindowSetSizable(Town_Hall.window[1], false)
@@ -41,7 +41,7 @@ guiSetFont(Town_Hall.button[2], "default-bold-small")
 	addEventHandler("onClientMarkerHit",resourceRoot,
 		function(p)
 			local id = getElementID(source)
-			if p == localPlayer then 
+			if p == localPlayer then
 				if(id == "15") then
 					guiSetVisible(Town_Hall.window[1],true)
 					showCursor(true)
@@ -49,7 +49,7 @@ guiSetFont(Town_Hall.button[2], "default-bold-small")
 			end
 		end
 	)
-	
+
 	function leave()
 		guiSetVisible(Town_Hall.window[1],false)
 		showCursor(false)
@@ -63,7 +63,7 @@ guiSetFont(Town_Hall.button[2], "default-bold-small")
 			if getElementData(localPlayer,"susa:d_licence") == 0 then
 				if money >= 1800 then
 					local money = money-3400
-					setElementData(localPlayer,"susa:d_licence",1)
+
 					triggerServerEvent("licence",localPlayer,localPlayer,1,money)
 					setPlayerMoney(money-1800,false)
 					outputChatBox("You successfully bought your driving licence",24,255,24)
@@ -76,7 +76,7 @@ guiSetFont(Town_Hall.button[2], "default-bold-small")
 		elseif row == 1 then
 			if getElementData(localPlayer,"susa:b_licence") == 0 then
 				if money >= 3400 then
-					setElementData(localPlayer,"susa:b_licence",1)
+
 					local money = money-3400
 					outputChatBox("You successfully bought your boat licence",24,255,24)
 					triggerServerEvent("licence", localPlayer,localPlayer,2,money)
@@ -88,7 +88,7 @@ guiSetFont(Town_Hall.button[2], "default-bold-small")
 			end
 		elseif row == 2 then
 			if getElementData(localPlayer,"susa:taxi") == 0 and getElementData(localPlayer,"susa:trash") == 0 and getElementData(localPlayer,"susa:bus") == 0 then
-					setElementData(localPlayer,"susa:taxi",1)
+
 					outputChatBox("You successfully started the Job",24,255,24)
 					triggerServerEvent("licence", localPlayer,localPlayer,3,money)
 			else
@@ -96,7 +96,7 @@ guiSetFont(Town_Hall.button[2], "default-bold-small")
 			end
 		elseif row == 3 then
 			if getElementData(localPlayer,"susa:trash") == 0  and getElementData(localPlayer,"susa:taxi") ==0 and getElementData(localPlayer,"susa:bus") == 0 then
-					setElementData(localPlayer,"susa:trash",1)
+
 					outputChatBox("You successfully started the Job",24,255,24)
 					triggerServerEvent("licence", localPlayer,localPlayer,4,money)
 			else
@@ -104,7 +104,7 @@ guiSetFont(Town_Hall.button[2], "default-bold-small")
 			end
 		elseif row == 4 then
 			if getElementData(localPlayer,"susa:bus") == 0 and getElementData(localPlayer,"susa:taxi") == 0 and getElementData(localPlayer,"susa:trash") == 0 then
-					setElementData(localPlayer,"susa:bus",1)
+
 					outputChatBox("You successfully started the Job",24,255,24)
 					triggerServerEvent("licence", localPlayer,localPlayer,5,money)
 			else
@@ -114,7 +114,7 @@ guiSetFont(Town_Hall.button[2], "default-bold-small")
 			if getElementData(localPlayer,"susa:tuning") == 0 or getElementData(localPlayer,"susa:tuning") == false then
 				if getElementData(localPlayer,"susa:d_licence") == 1 then
 					if money >= 8000 then
-						setElementData(localPlayer,"susa:tuning",1)
+
 						local money = money-8000
 						outputChatBox("You successfully bought your tuning licence",24,255,24)
 						triggerServerEvent("licence", localPlayer,localPlayer,6,money)
@@ -124,7 +124,7 @@ guiSetFont(Town_Hall.button[2], "default-bold-small")
 				else
 					outputChatBox("You dont have the driving licence!",255,24,24)
 				end
-		else 
+		else
 				outputChatBox("You alredy have the tuning licence",255,24,24)
 			end
 		end
