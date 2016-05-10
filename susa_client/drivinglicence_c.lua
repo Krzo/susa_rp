@@ -4,7 +4,7 @@ drivinglicence = {
     label = {},
 	gridlist = {}
 }
-local screenW, screenH = guiGetScreenSize() 
+local screenW, screenH = guiGetScreenSize()
 drivinglicence.window[1] = guiCreateWindow((screenW - 356) / 2, (screenH - 247) / 2, 356, 247, "Driving Licence", false)
 guiWindowSetMovable(drivinglicence.window[1], false)
 guiWindowSetSizable(drivinglicence.window[1], false)
@@ -28,7 +28,7 @@ guiSetFont(drivinglicence.button[2], "default-bold-small")
 	addEventHandler("onClientMarkerHit",resourceRoot,
 		function(p)
 			local id = getElementID(source)
-			if p == localPlayer then 
+			if p == localPlayer then
 				if(id == "20") then
 					guiSetVisible(drivinglicence.window[1],true)
 					showCursor(true)
@@ -36,14 +36,14 @@ guiSetFont(drivinglicence.button[2], "default-bold-small")
 			end
 		end
 	)
-	
+
 	addEventHandler("onClientGUIClick",drivinglicence.button[1],
 		function()
 			guiSetVisible(drivinglicence.window[1],false)
 			showCursor(false)
 		end
 	)
-	
+
 	addEventHandler("onClientGUIClick",drivinglicence.button[2],
 		function()
 		local money = getPlayerMoney(localPlayer)
@@ -64,4 +64,3 @@ guiSetFont(drivinglicence.button[2], "default-bold-small")
 			end
 		end
 	)
-

@@ -5,15 +5,17 @@ local blurStrength = 5
 local blurShader = dxCreateShader("susa_data/BlurShader.fx")
 local myScreenSource = dxCreateScreenSource(x,y)
 
-	local useredit = dxElement:create("edit","",px+260,py+207,305,30,{116,116,116,255},1,"default-bold",false,"none",nil,{61,64,62,200},{61,64,62,255},nil,{230,230,230,180})
+	local useredit = dxElement:create("edit","",px+260,py+207,305,30,{50,50,50,255},1,"default-bold",false,"none",nil,{25,25,25,200},{61,64,62,255},nil,{255,25,25,255})
 			useredit:setBackgroundColor({148, 157, 164,100})
+			useredit:setBorderColor({255,25,25,255})
 	local loginbutton = dxElement:create("button","susa_data/login.png",px+308,py+350,170,45,{255,255,255,255},1,"default-bold",false,"none",nil,{255,255,255,255},{255,255,255,255},nil,{255,255,255,255})
 			loginbutton:setFunction("Login")
 	local regbutton = dxElement:create("button","susa_data/reg.png",px+308,py+400,170,45,{255,255,255,255},1,"default-bold",false,"none",nil,{255,255,255,255},{255,255,255,255},nil,{255,255,255,255})
 			regbutton:setFunction("Register")
-	local passedit = dxElement:create("edit","",px+260,py+275,305,30,{116,116,116,255},1,"default-bold",false,"none",nil,{61,64,62,200},{61,64,62,255},nil,{230,230,230,180})
+	local passedit = dxElement:create("edit","",px+260,py+275,305,30,{50,50,50,255},1,"default-bold",false,"none",nil,{25,25,25,200},{61,64,62,255},nil,{255,25,25,255})
 			passedit:setBackgroundColor({148, 157, 164,100})
 			passedit:setHidden(true)
+			passedit:setBorderColor({255,25,25,255})
 
 	function LoginPanel()
 		-- ## cameramatrix mit mouse
@@ -24,7 +26,7 @@ local myScreenSource = dxCreateScreenSource(x,y)
 			dxSetShaderValue(blurShader,"UVSize",x,y);
 			dxDrawImage(0, 0,x,y,blurShader)
 		end
-		dxDrawImage ( px, py, w, h,"susa_data/login_form.png",0, 0,0,tocolor(255,255,255,255), false)
+		dxDrawImage ( px, py, w, h,"susa_data/login_form.png",0, 0,0,tocolor(255,255,255,231), false)
 		showCursor(true)
 		setCameraMatrix( -2039.0190429688, 92.347702026367, 53.365600585938, -2038.2268066406, 92.829689025879, 52.991344451904)
 		toggleControl("chatbox",false)
@@ -32,23 +34,23 @@ local myScreenSource = dxCreateScreenSource(x,y)
 		setPlayerHudComponentVisible("all",false)
 	end
 	addEventHandler("onClientRender",root,LoginPanel)
-	
+
 	addEventHandler("onClientResourceStart",resourceRoot,
 		function()
 			setElementData(localPlayer,"LoginMenu",true)
 			local username, password = loadLoginFromXML()
 			useredit:setText(username)
-            passedit:setText(password)
+      passedit:setText(password)
 			setBlurLevel(0)
 		end
-	)
-	
+		)
+
 	--[[bindKey("m","down",
 		function()
 			showCursor(not isCursorShowing())
 		end
 	)--]]
-	
+
 	function EnterKey(button,pr)
 		if (getElementData(localPlayer,"LoginMenu")) then
 			if button == "enter" and pr then
@@ -57,7 +59,7 @@ local myScreenSource = dxCreateScreenSource(x,y)
 		end
 	end
 	addEventHandler("onClientKey",root,EnterKey)
-	
+
 	function Login()
 		username = useredit:setText()
 		password = passedit:setText()
@@ -66,7 +68,7 @@ local myScreenSource = dxCreateScreenSource(x,y)
 		else
 			triggerServerEvent("LoginEvent",localPlayer,localPlayer,username,password)
 		end
-		
+
 	end
 
 	function Register()
@@ -77,8 +79,8 @@ local myScreenSource = dxCreateScreenSource(x,y)
 		else
 			triggerServerEvent("RegisterEvent",localPlayer,localPlayer,username,password)
 		end
-	end	
-	
+	end
+
 	function closePanel()
 		removeEventHandler("onClientRender",root,LoginPanel)
 		passedit:setVisibility(false)
@@ -99,7 +101,7 @@ local myScreenSource = dxCreateScreenSource(x,y)
 	end
 	addEvent("closeLogin",true)
 	addEventHandler("closeLogin",root,closePanel)
-	
+
 	function loadLoginFromXML()
 		local xml_save_log_File = xmlLoadFile ("susa_data/userdata.xml")
 		if not xml_save_log_File then
@@ -113,8 +115,8 @@ local myScreenSource = dxCreateScreenSource(x,y)
 			return "", ""
 		end
 		xmlUnloadFile ( xml_save_log_File )
-	end	
-	
+	end
+
 	function saveLoginToXML(username, password)
 		local xml_save_log_File = xmlLoadFile ("susa_data/userdata.xml")
 			if not xml_save_log_File then
@@ -131,7 +133,7 @@ local myScreenSource = dxCreateScreenSource(x,y)
 				local passwordNode = xmlFindChild (xml_save_log_File, "password", 0)
 				if not passwordNode then
 					passwordNode = xmlCreateChild(xml_save_log_File, "password")
-				end		
+				end
 				xmlNodeSetValue (passwordNode, tostring(password))
 			end
 		xmlSaveFile(xml_save_log_File)

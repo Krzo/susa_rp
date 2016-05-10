@@ -2,9 +2,9 @@ addEventHandler("onResourceStart",resourceRoot,
 	function()
 		db = dbConnect("mysql","dbname=accounts;host=localhost","root","")
 		if(db)then
-			outputDebugString("Database: connected",3)
+			outputServerLog("Database: connected")
 		else
-			outputConsole("Database: not connected",1)
+			outputServerLog("Database: not connected")
 		end
 	end
 )

@@ -21,12 +21,17 @@
 		{"McLaren MP4 12C",80000,541},
 		{"Lexus IS300 Tunable ",100000,560},
 		{"BMW E92",60000,411},
-		{"Impala SS Tunable",100000,567}
+		{"Impala SS Tunable",100000,567},
+		{"GTA V Nightshade",25000,475},
+		{"Pontiac LeMans",30000,518},
+		{"Elegy SRT",28000,562},
+		{"Chevrolet El Camino SS",15000,600},
+		{"Ford F100",16000,478},
+		{"Ford Mustang",65000,402}
 	}
-	
+
 	local screenW, screenH = guiGetScreenSize()
 	Carwindow.window[1] = guiCreateWindow(px, py, 388, 388, "San Fierro Car Shop", false)
-	guiWindowSetMovable(Carwindow.window[1], false)
 	guiWindowSetSizable(Carwindow.window[1], false)
 	guiSetAlpha(Carwindow.window[1], 0.90)
 	guiSetVisible(Carwindow.window[1], false)
@@ -41,8 +46,8 @@
 	guiSetFont(Carwindow.button[1], "default-bold-small")
 	Carwindow.button[2] = guiCreateButton(241, 319, 126, 49, "Leave", false, Carwindow.window[1])
 	guiSetFont(Carwindow.button[2], "default-bold-small")
-	
-		
+
+
 	for i,v in ipairs(cars) do
 		local car,price,id = unpack(cars[i])
 		row = guiGridListAddRow(Carwindow.gridlist[1])
@@ -50,7 +55,7 @@
 		guiGridListSetItemText(Carwindow.gridlist[1], row, 2, tostring(price), false, false)
 		guiGridListSetItemText(Carwindow.gridlist[1], row, 3, tostring(id), false, false)
 	end
-	
+
 	addEventHandler("onClientPickupHit",resourceRoot,
 		function(plr)
 			local id = getElementID(source)
@@ -66,11 +71,11 @@
 			end
 		end
 	)
-	
-	
-	
+
+
+
 	--[[function DrawShop()
-		showingshop = true 
+		showingshop = true
 		local eastype = "InOutQuad"
 		local x,y = guiGetScreenSize()
 		local bgw,bgh = 300,150
@@ -86,14 +91,14 @@
 		dxDrawRectangle(0,0,x,y,tocolor(0,0,0,200),false)
 		dxDrawImage(recintx,recinty,bgw,bgh,"susa_data/Carwindowys/inf.png")
 		dxDrawImage(recintx+310,recinty,bgw,bgh,"susa_data/Carwindowys/cheetah.png")
-		dxDrawImage(recintx-310,recinty,bgw,bgh,"susa_data/Carwindowys/banshee.png")		
-		dxDrawImage(recintx2,recinty2,bgw,bgh,"susa_data/Carwindowys/bullet.png")		
-		dxDrawImage(recintx,recinty+200,bgw,bgh,"susa_data/Carwindowys/exit.png")	
+		dxDrawImage(recintx-310,recinty,bgw,bgh,"susa_data/Carwindowys/banshee.png")
+		dxDrawImage(recintx2,recinty2,bgw,bgh,"susa_data/Carwindowys/bullet.png")
+		dxDrawImage(recintx,recinty+200,bgw,bgh,"susa_data/Carwindowys/exit.png")
 		if guiGetVisible(Carwindow.window[1]) == false then
 			if isMouseWithinRangeOf(recintx,bgw,recinty,bgh) then
 				dxDrawRectangle(recintx,recinty,bgw,bgh,hover,false)
 				dxDrawText("INFERNUS",recintx+80,recinty+50,x,y,tocolor(0,0,0,180),2,"default-bold","left","top",false,false,false,false,false,0,0,0)
-				car = "Infernus" 
+				car = "Infernus"
 				price = 100000
 			elseif isMouseWithinRangeOf(recintx+310,bgw,recinty,bgh) then
 				dxDrawRectangle(recintx+310,recinty,bgw,bgh,hover,false)
@@ -121,13 +126,13 @@
 		end
 		--outputChatBox(car)
 	end--]]
-	
+
 	function rotateCamera()
 		angle = angle + 0.5
 		if angle >= 359 then angle = 0 end
 		setElementRotation(carshow,0,0,angle)
 	end
-	
+
 	addEventHandler("onClientGUIClick",Carwindow.button[2],
 		function()
 			showCursor(false)
@@ -135,20 +140,20 @@
 			setCameraTarget(localPlayer)
 			removeEventHandler("onClientRender",root,rotateCamera)
 			if isElement(carshow) then destroyElement(carshow) end
-		end	
-	)	
+		end
+	)
 	addEventHandler("onClientGUIClick",Carwindow.gridlist[1],
 		function()
 			local id = guiGridListGetItemText(Carwindow.gridlist[1],guiGridListGetSelectedItem(Carwindow.gridlist[1]),3)
-			if isElement(carshow) then destroyElement(carshow) end	
-			carshow = createVehicle(id,-1951.75806, 298.48566, 48.30313,-0, 0, 101.23359680176,"SUSA")	
+			if isElement(carshow) then destroyElement(carshow) end
+			carshow = createVehicle(id,-1951.75806, 298.48566, 48.30313,-0, 0, 101.23359680176,"SUSA")
 			setCameraMatrix(-1958.7713623047, 302.42260742188, 50.619598388672, -1958.0671386719, 301.90463256836, 50.134014129639)
 			guiSetPosition(Carwindow.window[1],px+388,py,false)
 			local r,g,b = math.random(255),math.random(255),math.random(255)
 			setVehicleColor(carshow,r,g,b)
 		end
 	)
-	
+
 	addEventHandler("onClientGUIClick",Carwindow.button[1],
 		function()
 			local carname = guiGridListGetItemText(Carwindow.gridlist[1],guiGridListGetSelectedItem(Carwindow.gridlist[1]),1)
@@ -162,9 +167,9 @@
 			setCameraTarget(localPlayer)
 			removeEventHandler("onClientRender",root,rotateCamera)
 			if isElement(carshow) then destroyElement(carshow) end
-		end	
+		end
 	)
-	
+
 	addCommandHandler("car",
 		function()
 			setElementPosition(localPlayer,-1968.54626, 293.75320, 35.17188)

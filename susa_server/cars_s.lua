@@ -11,26 +11,32 @@ addEventHandler("onResourceStart",resourceRoot,
 )
 
 function spawnVehiclesFromDatabase()
-        local sql = dbQuery(db, "SELECT * FROM cars")
-        local result, num_rows = dbPoll(sql, -1)
-        for _, row in pairs (result) do
-                local spawnedVehicle = createVehicle(row["CARID"], row["SPAWNX"], row["SPAWNY"], row["SPAWNZ"], row["ROTX"], row["ROTY"], row["ROTZ"])
-                setVehicleColor( spawnedVehicle, row["R"], row["G"], row["B"])
-                setElementData( spawnedVehicle, "Owner", row["OWNER"] )
-                setElementData( spawnedVehicle, "Price", row["PRICE"] )
-                setElementData( spawnedVehicle, "CarKey", row["CARKEY"] )
-                toggleVehicleRespawn( spawnedVehicle, true )
+	local carcounter = 0
+    local sql = dbQuery(db, "SELECT * FROM cars")
+    local result, num_rows = dbPoll(sql, -1)
+    for _, row in pairs (result) do
+		carcounter = carcounter + 1
+        local spawnedVehicle = createVehicle(row["CARID"], row["SPAWNX"], row["SPAWNY"], row["SPAWNZ"], row["ROTX"], row["ROTY"], row["ROTZ"])
+				local carparts = fromJSON(tostring(row["CARPARTS"]))
+				local r,g,b = tonumber(row["R"]), tonumber(row["G"]), tonumber(row["B"])
+        setVehicleColor(spawnedVehicle,r,g,b,r,g,b,r,g,b,r,g,b)
+        setElementData( spawnedVehicle, "Owner", tostring(row["OWNER"]))
+        setElementData( spawnedVehicle, "Price", row["PRICE"] )
+        setElementData( spawnedVehicle, "CarKey", row["CARKEY"] )
+        toggleVehicleRespawn( spawnedVehicle, true )
 				setVehicleEngineState(spawnedVehicle,false)
-                setVehicleIdleRespawnDelay( spawnedVehicle, 300*1000 )
-                setVehicleRespawnDelay( spawnedVehicle, 1*1000 )
+        setVehicleIdleRespawnDelay( spawnedVehicle, 300*1000 )
+        setVehicleRespawnDelay( spawnedVehicle, 1*1000 )
 				setVehicleHandling(spawnedVehicle,"suspensionLowerLimit",-0.045)
-				if (row["CARID"] == 560) then
-					setVehicleHandling(spawnedVehicle,"suspensionLowerLimit",-0.01)
+				if (carparts ~= nil ) then
+					if (carparts ~= 0 ) then
+						for _,part in pairs (carparts) do
+							addVehicleUpgrade(spawnedVehicle,tonumber(part))
+						end
+					end
 				end
-				if (row["CARID"] == 560) then
-					setVehicleHandling(spawnedVehicle,"suspensionLowerLimit",-0.01)
-				end
-        end
+    end
+	outputServerLog("Cars created: "..tostring(carcounter))
 end
 addEventHandler("onResourceStart", resourceRoot, spawnVehiclesFromDatabase)
 
@@ -47,20 +53,20 @@ addCommandHandler("sellmycar",
 			price = result[1]["PRICE"]
 			local sellprice = price * 0.40
 			Delcar = dbExec(db,"DELETE FROM cars WHERE OWNER=?",pName )
-		if Delcar then
-			outputChatBox("You just sold your car for 40% of the original price: "..sellprice,player,0,180,0)
-			setPlayerMoney(player,money+sellprice,false)
-			for _, veh in pairs ( getElementsByType("vehicle") ) do 
-				if(tostring(getElementData(veh, "Owner")) == tostring(pName)) then
-					destroyElement(veh)
+			if Delcar then
+				outputChatBox("You just sold your car for 40% of the original price: "..sellprice,player,0,180,0)
+				setPlayerMoney(player,money+sellprice,false)
+				for _, veh in pairs ( getElementsByType("vehicle") ) do
+					if(tostring(getElementData(veh, "Owner")) == tostring(pName)) then
+						destroyElement(veh)
+					end
 				end
+			else
+				outputDebugString("Delcar: "..Delcar)
 			end
-			else 
-				outputDebugString(Delcar)
-		end
-		else 
+		else
 			outputChatBox("Sie besitzen kein Auto",player, 255, 0,0)
-	end
+		end
 	end
 end)
 
@@ -105,7 +111,7 @@ addEventHandler("onVehicleExit",root,
 
 addEvent("CarBuy",true)
 local function CarBuyFunc(lp,veh,price,id)
-	local username = getElementData(lp,"username") 
+	local username = getElementData(lp,"username")
 	local GetData = dbQuery(db,"SELECT * FROM cars WHERE OWNER=?", username)
 	if GetData then
 		result, Rows = dbPoll(GetData, -1)
@@ -157,7 +163,7 @@ addEventHandler("CarBuy",root,CarBuyFunc)
 			end
 		end
 	)
-	
+
 
 	addCommandHandler("engine",
 		function(plr)
@@ -170,16 +176,7 @@ addEventHandler("CarBuy",root,CarBuyFunc)
 			end
 		end
 	)
-	
-	addEventHandler("onVehicleExplode",root,
-		function()
-			local owner = getElementData(source,"Owner")
-			if owner ~= "" then
-				dbExec(db,"DELETE FROM cars WHERE OWNER=?",pName )
-			end
-			
-		end
-	)
+
 
 	function park_func(player, cmd )
 	local pName = getElementData(player,"username")
@@ -189,8 +186,9 @@ addEventHandler("CarBuy",root,CarBuyFunc)
 			local rx,ry,rz = getElementRotation(veh)
 			local vehicleOwner = getElementData(veh, "Owner")
 			local vehicleKey = getElementData(veh, "CarKey")
+			local r,g,b = getVehicleColor(veh,true)
 			if tostring(vehicleOwner) == tostring(pName) then
-				parkVehicle( tostring(vehicleOwner), x,y,z,rx,ry,rz)
+				parkVehicle( tostring(vehicleOwner), x,y,z,rx,ry,rz,r,g,b)
 				outputChatBox("You parked your car at : "..x..","..y..","..z,player,200,200,0)
 			else
 				outputChatBox("This car doesn't belong to you.", player, 200, 200, 0)
@@ -200,7 +198,7 @@ addEventHandler("CarBuy",root,CarBuyFunc)
 		end
 	end
 	addCommandHandler("park", park_func)
-	
+
 	function parkVehicle( owner, posx, posy, posz, rotx, roty, rotz, r, g, b )
 		local sql = dbQuery(db, "SELECT * FROM cars WHERE OWNER = ?", owner )
 		local result, num_rows = dbPoll(sql, -1)
@@ -210,25 +208,27 @@ addEventHandler("CarBuy",root,CarBuyFunc)
 			end
 		end
 	end
-	
+
 	function saveVehiclesToDatabase()
-        for _, v in pairs (getElementsByType("vehicle")) do
-			local x,y,z = getElementPosition(v)
-			local rx,ry,rz = getElementRotation(v)
-			local owner = getElementData(v,"Owner") or ""
-			local r,g,b = getVehicleColor(v,false)
-			parkVehicle(owner,x,y,z,rx,ry,rz,r,g,b)
-        end
+      for _, v in pairs (getElementsByType("vehicle")) do
+				local x,y,z = getElementPosition(v)
+				local rx,ry,rz = getElementRotation(v)
+				local owner = getElementData(v,"Owner") or ""
+				local r,g,b = getVehicleColor(v,true)
+				if owner ~= "" then
+					parkVehicle(owner,x,y,z,rx,ry,rz,r,g,b)
+				end
+      end
 	end
 	addEventHandler("onResourceStop", resourceRoot, saveVehiclesToDatabase)
-	
-	
+
+
 	function GetPosCar(plr)
 		local pName = getElementData(plr,"username")
-		for _, veh in pairs ( getElementsByType("vehicle") ) do 
+		for _, veh in pairs ( getElementsByType("vehicle") ) do
 			local owner = tostring(getElementData(veh, "Owner"))
-			if (owner ~= "") then
-				if(owner == tostring(pName)) then
+			if (owner ~= "" or owner ~= false) then
+				if(owner == pName) then
 					local x,y,z = getElementPosition(plr)
 					--[[local city = getZoneName(x,y,z,true)
 					local cityZone = getZoneName(x,y,z)
@@ -237,23 +237,22 @@ addEventHandler("CarBuy",root,CarBuyFunc)
 					--createBlipAttachedTo(veh,55,0.5,255,255,255,255,0,99999,plr)
 					setElementPosition(veh,x,y,z+3)
 					warpPedIntoVehicle(plr,veh)
-					break
 				end
 			end
 		end
 	end
 	addCommandHandler("getmycar",GetPosCar)
-	
+
 	function adminCar(plr)
 		local pName = getElementData(plr,"username")
-		for _, veh in pairs ( getElementsByType("vehicle") ) do 
+		for _, veh in pairs ( getElementsByType("vehicle") ) do
 			if(tostring(getElementData(veh, "Owner")) == tostring(pName)) then
 				warpPedIntoVehicle(plr,veh)
 			end
 		end
 	end
 	addCommandHandler("admincar",adminCar)
-	
+
 	function clearChat(plr)
 	local accName = getAccountName ( getPlayerAccount ( plr ) )
 	local admnName = getPlayerName(plr)
@@ -278,13 +277,21 @@ addEventHandler("CarBuy",root,CarBuyFunc)
 			outputChatBox(" ")
 			outputChatBox(" ")
 			outputChatBox(" ")
-			outputChatBox(" ")		
-			outputChatBox ( "SUSA-BOT : Admin [".. admnName .."] cleared the chat", getRootElement(), 255, 24, 24, true )		
+			outputChatBox(" ")
+			outputChatBox(" ")
+			outputChatBox(" ")
+			outputChatBox(" ")
+			outputChatBox(" ")
+			outputChatBox(" ")
+			outputChatBox(" ")
+			outputChatBox(" ")
+			outputChatBox(" ")
+			outputChatBox(" ")
+			outputChatBox(" ")
+			outputChatBox(" ")
+			outputChatBox ( "SUSA-BOT : Admin [".. admnName .."] cleared the chat", getRootElement(), 255, 24, 24, true )
 		   else
 		   outputChatBox ("Access denied", plr, 255, 0, 0)
 		 end
 	end
 	addCommandHandler("clearchat", clearChat)
-	
-	
-	

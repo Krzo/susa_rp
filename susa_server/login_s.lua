@@ -22,6 +22,10 @@
 					setElementData(p,"susa:trash",0)
 					setElementData(p,"susa:bus",0)
 					setElementData(p,"susa:tuning",0)
+					bindKey(p,"x","down","engine")
+					bindKey(p,"l","down","light")
+					local country = exports.admin:getPlayerCountry(p)
+					setElementData(p,"country",tostring(counrty))
 					triggerClientEvent(p,"saveLoginToXML",getRootElement(),username,password)
 				end
 			else
@@ -36,7 +40,7 @@
 		if not(p ~= client) then
 			local t
 			local username = string.lower(username)
-			query = dbQuery(db, "SELECT * FROM accounts WHERE username = '"..username.."'")
+			query = dbQuery(db, "SELECT * FROM accounts WHERE username=?",username)
 			result = dbPoll(query, -1)
 			local passwordsha = sha256(password)
 			if result and #result == 1 then
@@ -64,28 +68,41 @@
 					setElementData(p,"susa:tuning",tuning_licence)
 					setElementData(p,"loggedIN",true)
 					setElementData(p,"username",string.lower(username))
+					bindKey(p,"x","down","engine")
+					bindKey(p,"l","down","light")
+					local country = exports.admin:getPlayerCountry(p)
+					setElementData(p,"country",tostring(counrty))
 					if tp and tp ~= nil then
 						t = getTeamFromName(tp)
 					else
 						t = nil
 					end
+					local housequery = dbQuery(db,"SELECT * FROM houses WHERE OWNER=?",username)
+					local houseres = dbPoll(housequery,-1)
+					if houseres and #houseres == 1 then
+						local datas = houseres[1]
+						local hx,hy,hz = datas.X,datas.Y,datas.Z
+						spawnPlayer(p,hx,hy,hz,0,skin,inte,0)
+						dbFree(housequery)
+					else
+						spawnPlayer(p,x,y,z,0,skin,inte,0)
+					end
 					triggerClientEvent(p,"saveLoginToXML",getRootElement(),username,password)
 					local name = string.gsub(getPlayerName(p), "#%x%x%x%x%x%x", "")
 					outputChatBox("You succcessfully logged in. Welcome, "..name.."",p,24,255,24)
-					spawnPlayer(p,x,y,z,0,skin,inte,dim)
 					setPlayerTeam(p,tp)
 					setPlayerMoney(p,m)
-					setElementDimension(p,dim)
+					setElementDimension(p,0)
 					setElementInterior(p,inte)
 					setElementModel(p,tonumber(s))
 				else
 					outputChatBox("Your password is not correct!",p,255,24,24)
-
 				end
 			else
 				outputChatBox("This account does not exist", p,255,24,24)
 			end
 		end
+		dbFree(query)
 	end
 	addEvent("LoginEvent",true)
 	addEventHandler("LoginEvent", root, LoginFunc)
@@ -99,7 +116,9 @@
 			local inte, dim = getElementInterior ( source ), getElementDimension ( source )
 			local x, y, z = getElementPosition ( source )
 			local d_licence,b_licence = getElementData(source,"susa:d_licence"),getElementData(source,"susa:b_licence")
-			dbFree(dbQuery(db, "UPDATE accounts SET x=?, y=?, z=?, skin=?, inte=?, dim=?, money=?,d_licence=?,b_licence=? WHERE username=?", x, y, z, skin,inte,dim,money,d_licence,b_licence, username ))
+			local t,tr,b = getElementData(source,"susa:taxi"),getElementData(source,"susa:trash"),getElementData(source,"bus")
+			local tune = getElementData(source,"susa:tuning")
+			dbExec(db, "UPDATE accounts SET x=?, y=?, z=?, skin=?, inte=?, dim=?, money=?,d_licence=?,b_licence=?,taxi_licence=?,trashman_licence=?,bus_licence=?,tuning_licence=? WHERE username=?", x, y, z, skin,inte,dim,money,d_licence,b_licence,t,tr,b,tune, username )
 		end
 	end
 	addEventHandler ("onPlayerQuit", root, onQuit)
@@ -114,7 +133,9 @@
 				local inte, dim = getElementInterior ( v ), getElementDimension ( v )
 				local x, y, z = getElementPosition ( v )
 				local d_licence,b_licence = getElementData(v,"susa:d_licence"),getElementData(v,"susa:b_licence")
-				dbFree(dbQuery(db, "UPDATE accounts SET x=?, y=?, z=?, skin=?, inte=?, dim=?, money=?,d_licence=?,b_licence=? WHERE username=?", x, y, z, skin,inte,dim,money,d_licence,b_licence, username ))
+				local t,tr,b = getElementData(v,"susa:taxi"),getElementData(v,"susa:trash"),getElementData(v,"bus")
+				local tune = getElementData(v,"susa:tuning")
+				dbExec(db, "UPDATE accounts SET x=?, y=?, z=?, skin=?, inte=?, dim=?, money=?,d_licence=?,b_licence=?,taxi_licence=?,trashman_licence=?,bus_licence=?,tuning_licence=? WHERE username=?", x, y, z, skin,inte,dim,money,d_licence,b_licence,t,tr,b,tune, username )
 			end
 		end
 	end

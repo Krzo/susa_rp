@@ -9,7 +9,7 @@ addEventHandler("onResourceStart",resourceRoot,
 		-- ************************* RATHAUS *************************
 		-- ************************* WANG CARS ***********************
 		local c = createPickup(-1968.54626, 293.75320, 35.17188,3,1274,500)
-		createBlip(-1968.54626, 293.75320, 36.17188,55,3) 
+		createBlip(-1968.54626, 293.75320, 36.17188,55,3)
 		setElementID(c,"16")
 		-- ************************* WANG CARS ***********************
 		-- ************************* TRANSFENDER *********************
@@ -28,9 +28,9 @@ addEventHandler("onResourceStart",resourceRoot,
 		local dl = createMarker(-2026.59656, -100.73959, 33.42152,"cylinder",3,255,24,24,255,root)
 		createBlip( -2026.59656, -100.73959, 35.92152,24,3)
 		setElementID(dl,"20")
-	end	
+	end
 	)
-	
+
 	function syncTime()
 		local realTime = getRealTime()
 		local hour = realTime.hour
@@ -38,13 +38,13 @@ addEventHandler("onResourceStart",resourceRoot,
 		setMinuteDuration ( 60000 )
 		setTime( hour , minute )
 	end
-	setTimer ( syncTime, 500, 1 ) 
-	setTimer ( syncTime, 3000000, 0 ) 
+	setTimer ( syncTime, 500, 1 )
+	setTimer ( syncTime, 3000000, 0 )
 	function SyncTime2()
 		setTimer ( syncTime, 4000, 1 )
 	end
 	addEventHandler ( "onResourceStart", getRootElement(), SyncTime2 )
-	
+
 	addEventHandler ( "onResourceStart", getResourceRootElement(getThisResource()),
      function()
         --[[createObject(11388, -2048.216796875, 166.73092651367, 34.468391418457, 0.000000, 0.000000, 0.000000,false) --
@@ -61,14 +61,14 @@ addEventHandler("onResourceStart",resourceRoot,
 		createObject(2893, -2050.9458007813, 179.59997558594, 29.112930297852,343,0,270,false  )
 		local tune1 = createObject(2893, -2050.9458007813, 171.15930175781, 29.112930297852,343,0,270,false  )
 		local tune2 = createObject(2893, -2050.9458007813, 169.32849121094, 29.112930297852,343,0,270,false  )
-		
+
  		local tow = createVehicle(415, -2052.4907226563, 154.04287719727, 28.589487075806, 0, 0, 0, "YARRAK")
 		addVehicleUpgrade ( tow, 1010 )
 		setVehicleDamageProof( tow, true)
-		setVehicleIdleRespawnDelay ( tow, 10000 ) 
+		setVehicleIdleRespawnDelay ( tow, 10000 )
 		setVehicleLocked(tow,true)
 		setGarageOpen(22,true)
 		setGarageOpen(18,true)
-		
+
      end
 	)

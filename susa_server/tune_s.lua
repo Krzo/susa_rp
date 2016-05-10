@@ -4,6 +4,7 @@ addEvent("onTuningJoin",true)
 addEvent("onTuningLeave",true)
 addEvent("onTuningPartSelected",true)
 addEvent("onTuningPartsRemove",true)
+addEvent("onTuningColor",true)
 local dimension = 6000
 local tuneinterior = {
 	{6959, -2060.5, 446.39999, 138.8},
@@ -19,7 +20,7 @@ addEventHandler("onTuningJoin",root,
 		setElementDimension(plr,dimension)
 		setElementDimension(veh,dimension)
 		setTimer(setElementFrozen,5000,1,veh,true)
-		setTimer(setElementHealth,5000,1,veh,1000)
+		setTimer(setElementHealth,5003,1,veh,1000)
 		setElementFrozen(plr,true)
 		setElementPosition(veh, -2069.1520996094, 434.58093261719, 141.32582092285)
 		setElementRotation(veh, -0.32335954904556, 0.0089773759245872, 24.630849838257,"ZYX")
@@ -36,6 +37,7 @@ addEventHandler("onTuningJoin",root,
 )
 addEventHandler("onTuningLeave",root,
 	function(plr,veh)
+		local name = getElementData(plr,"username")
 		setElementDimension(veh,0)
 		setElementFrozen(veh,false)
 		setElementFrozen(plr,false)
@@ -45,8 +47,14 @@ addEventHandler("onTuningLeave",root,
 		setVehicleEngineState(veh,true)
 		setElementPosition(veh, -1958.4428710938, 221.25570678711, 32.252658843994)
 		setElementRotation(veh, 7.4617896080017, -4.2971258163452, 87.149810791016)
-		setElementAlpha(veh,100)
-		setTimer(setElementAlpha,5000,1,veh,255)
+		setElementAlpha(veh,0)
+		setTimer(setElementAlpha,2500,1,veh,255)
+		local carparts = getVehicleUpgrades(veh)
+		local carstring = toJSON(carparts)
+		setElementHealth(veh, 1000)
+		local r,g,b = getVehicleColor(veh,true)
+		outputChatBox("r:"..r.."g:"..g.."b:"..b)
+	 	dbExec(db,"UPDATE cars SET CARPARTS=?,R=?,G=?,B=? WHERE OWNER=?",carstring,r,g,b,name)
 	end
 )
 
@@ -55,15 +63,14 @@ addEventHandler("onTuningPartSelected",root,
 		if client ~= source then return end
 		local money = getPlayerMoney(plr)
 		local upgr = getVehicleUpgrades(veh)
-		for k,v in ipairs(upgr) do
-			if veh and id ~= nil or id ~= 0 and id ~= v then
-				addVehicleUpgrade(veh,id)
-				setPlayerMoney(plr,money-price)
-			elseif veh and id ~= nil or i~= 0 and id == v then
-				removeVehicleUpgrade(veh,id)
-			end
-		end
-		outputChatBox(price,plr)
+		addVehicleUpgrade(veh,id)
+		outputChatBox("ugprade triggered")
+	end
+)
+
+addEventHandler("onTuningColor",root,
+	function(veh,r,g,b)
+			setVehicleColor(veh,r,g,b,r,g,b,r,g,b,r,g,b)
 	end
 )
 
@@ -75,11 +82,6 @@ addEventHandler("onTuningPartsRemove",root,
 			removeVehicleUpgrade(veh,id)
 			setPlayerMoney(plr,money+price)
 		end
-	end
-)
-
-addEventHandler("saveTuningParts",root,
-	function()
 	end
 )
 --[[addEventHandler("onClientHydraulics",root,

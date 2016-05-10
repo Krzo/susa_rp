@@ -500,7 +500,7 @@ function housesys_startup()
 		local elapsed = (buildEndTick-buildStartTick)
 		outputServerLog("It took "..(elapsed/1000).." seconds to build all houses.")
 	end, 1000, 1)
-	rentTimer = setTimer(takePlayerRent, 60*60*1000, -1)
+	rentTimer = setTimer(takePlayerRent, 60*60*1000, 0)
 end
 
 
