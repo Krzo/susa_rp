@@ -28,6 +28,8 @@ guiGridListSetItemText(Town_Hall.gridlist[1], 2, 1, "trashman", false, false)
 guiGridListSetItemText(Town_Hall.gridlist[1], 2, 2, "1950 $", false, false)
 guiGridListSetItemText(Town_Hall.gridlist[1], 3, 1, "Bus-driver", false, false)
 guiGridListSetItemText(Town_Hall.gridlist[1], 3, 2, "40 cent/marker", false, false)
+guiGridListSetItemText(Town_Hall.gridlist[1], 5, 1, "Driving Licence", false, false)
+guiGridListSetItemText(Town_Hall.gridlist[1], 5, 2, "1800 $", false, false)
 Town_Hall.label[1] = guiCreateLabel(226, 29, 120, 80, "Welcome in the town hall of SUSA RP. Here you can buy Licences such as driving or boat Licences.", false, Town_Hall.window[1])
 guiLabelSetHorizontalAlign(Town_Hall.label[1], "left", true)
 Town_Hall.button[1] = guiCreateButton(236, 201, 108, 36, "Leave", false, Town_Hall.window[1])
@@ -70,6 +72,19 @@ guiSetFont(Town_Hall.button[2], "default-bold-small")
 			else
 				outputChatBox("You already own this licence!",255,24,24)
 			end
+		elseif row == 5 then
+			if getElementData(localPlayer,"susa:d_licence") == 0 then
+					if money >= 1800 then
+						setElementData(localPlayer,"susa:d_licence",1)
+						triggerServerEvent("licence",localPlayer,localPlayer,1)
+						setPlayerMoney(money-1800,false)
+						outputChatBox("You successfully bought your driving licence",24,255,24)
+					else
+						outputChatBox("You don't have enough money for this licence. You need 1800$",255,24,24)
+					end
+				else
+					outputChatBox("You already own this licence!",255,24,24)
+				end
 		elseif row == 1 then
 			if getElementData(localPlayer,"susa:taxi") == 0 and getElementData(localPlayer,"susa:trash") == 0 and getElementData(localPlayer,"susa:bus") == 0 then
 
