@@ -27,7 +27,8 @@
 		{"Elegy SRT",28000,562},
 		{"Chevrolet El Camino SS",15000,600},
 		{"Ford F100",16000,478},
-		{"Ford Mustang",65000,402}
+		{"Ford Mustang",65000,402},
+		{"GTA V Sandking",35000,495}
 	}
 
 	local screenW, screenH = guiGetScreenSize()
@@ -73,59 +74,6 @@
 	)
 
 
-
-	--[[function DrawShop()
-		showingshop = true
-		local eastype = "InOutQuad"
-		local x,y = guiGetScreenSize()
-		local bgw,bgh = 300,150
-		local px,py = x/2-bgw/2,y/2-bgh/2
-		local hover = tocolor(200,200,200,100)
-		startTime = getTickCount()
-		endTime = startTime + 200
-		local laufzeit = startTime - tickk
-		local dauer = endTime - tickk
-		local progress = laufzeit/dauer
-		local recintx,recinty,_ = interpolateBetween(px,y,0,px,py,0,progress,eastype)
-		local recintx2,recinty2,_ = interpolateBetween(px,-y,0,px,py-180,0,progress,eastype)
-		dxDrawRectangle(0,0,x,y,tocolor(0,0,0,200),false)
-		dxDrawImage(recintx,recinty,bgw,bgh,"susa_data/Carwindowys/inf.png")
-		dxDrawImage(recintx+310,recinty,bgw,bgh,"susa_data/Carwindowys/cheetah.png")
-		dxDrawImage(recintx-310,recinty,bgw,bgh,"susa_data/Carwindowys/banshee.png")
-		dxDrawImage(recintx2,recinty2,bgw,bgh,"susa_data/Carwindowys/bullet.png")
-		dxDrawImage(recintx,recinty+200,bgw,bgh,"susa_data/Carwindowys/exit.png")
-		if guiGetVisible(Carwindow.window[1]) == false then
-			if isMouseWithinRangeOf(recintx,bgw,recinty,bgh) then
-				dxDrawRectangle(recintx,recinty,bgw,bgh,hover,false)
-				dxDrawText("INFERNUS",recintx+80,recinty+50,x,y,tocolor(0,0,0,180),2,"default-bold","left","top",false,false,false,false,false,0,0,0)
-				car = "Infernus"
-				price = 100000
-			elseif isMouseWithinRangeOf(recintx+310,bgw,recinty,bgh) then
-				dxDrawRectangle(recintx+310,recinty,bgw,bgh,hover,false)
-				dxDrawText("CHEETAH",recintx+390,recinty+50,x,y,tocolor(0,0,0,180),2,"default-bold","left","top",false,false,false,false,false,0,0,0)
-				car = "Cheetah"
-				price = 75000
-			elseif isMouseWithinRangeOf(recintx-310,bgw,recinty,bgh) then
-				dxDrawRectangle(recintx-310,recinty,bgw,bgh,hover,false)
-				dxDrawText("BANSHEE",recintx-230,recinty+50,x,y,tocolor(0,0,0,180),2,"default-bold","left","top",false,false,false,false,false,0,0,0)
-				car = "Banshee"
-				price = 45000
-			elseif isMouseWithinRangeOf(recintx2,bgw,recinty2,bgh) then
-				dxDrawRectangle(recintx2,recinty2,bgw,bgh,hover,false)
-				dxDrawText("BULLET",recintx2+90,recinty2+50,x,y,tocolor(0,0,0,180),2,"default-bold","left","top",false,false,false,false,false,0,0,0)
-				car = "Bullet"
-				price = 60000
-			elseif isMouseWithinRangeOf(recintx,bgw,recinty+200,bgh) then
-				dxDrawRectangle(recintx,recinty+200,bgw,bgh,hover,false)
-				car = "N/A"
-				price = 0
-			elseif isMouseWithinRangeOf(0,0,x,y) then
-				car = "N/A"
-				price = 0
-			end
-		end
-		--outputChatBox(car)
-	end--]]
 
 	function rotateCamera()
 		angle = angle + 0.5

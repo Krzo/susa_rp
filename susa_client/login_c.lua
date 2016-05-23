@@ -26,7 +26,7 @@ local myScreenSource = dxCreateScreenSource(x,y)
 			dxSetShaderValue(blurShader,"UVSize",x,y);
 			dxDrawImage(0, 0,x,y,blurShader)
 		end
-		dxDrawImage ( px, py, w, h,"susa_data/login_form.png",0, 0,0,tocolor(255,255,255,231), false)
+		dxDrawImage ( px, py, w, h,"susa_data/login_form.png",0, 0,0,tocolor(255,255,255,255), false)
 		showCursor(true)
 		setCameraMatrix( -2039.0190429688, 92.347702026367, 53.365600585938, -2038.2268066406, 92.829689025879, 52.991344451904)
 		toggleControl("chatbox",false)

@@ -22,12 +22,12 @@ guiGridListSetItemText(Town_Hall.gridlist[1], 4, 1, "Tuning License", false, fal
 guiGridListSetItemText(Town_Hall.gridlist[1], 4, 2, "8000 $", false, false)
 guiGridListSetItemText(Town_Hall.gridlist[1], 0, 1, "Boat Licence", false, false)
 guiGridListSetItemText(Town_Hall.gridlist[1], 0, 2, "3400 $", false, false)
-guiGridListSetItemText(Town_Hall.gridlist[1], 1, 1, "Taxi-driver", false, false)
+guiGridListSetItemText(Town_Hall.gridlist[1], 1, 1, "Taxi Driver", false, false)
 guiGridListSetItemText(Town_Hall.gridlist[1], 1, 2, "60 cent/km", false, false) --Taxistation -> CAN
-guiGridListSetItemText(Town_Hall.gridlist[1], 2, 1, "trashman", false, false)
-guiGridListSetItemText(Town_Hall.gridlist[1], 2, 2, "1950 $", false, false)
-guiGridListSetItemText(Town_Hall.gridlist[1], 3, 1, "Bus-driver", false, false)
-guiGridListSetItemText(Town_Hall.gridlist[1], 3, 2, "40 cent/marker", false, false)
+guiGridListSetItemText(Town_Hall.gridlist[1], 2, 1, "Truck Driver", false, false)
+guiGridListSetItemText(Town_Hall.gridlist[1], 2, 2, "min. 1950 $", false, false)
+guiGridListSetItemText(Town_Hall.gridlist[1], 3, 1, "Bus Driver", false, false)
+guiGridListSetItemText(Town_Hall.gridlist[1], 3, 2, "40 cent/km", false, false)
 guiGridListSetItemText(Town_Hall.gridlist[1], 5, 1, "Driving Licence", false, false)
 guiGridListSetItemText(Town_Hall.gridlist[1], 5, 2, "1800 $", false, false)
 Town_Hall.label[1] = guiCreateLabel(226, 29, 120, 80, "Welcome in the town hall of SUSA RP. Here you can buy Licences such as driving or boat Licences.", false, Town_Hall.window[1])
@@ -87,24 +87,21 @@ guiSetFont(Town_Hall.button[2], "default-bold-small")
 				end
 		elseif row == 1 then
 			if getElementData(localPlayer,"susa:taxi") == 0 and getElementData(localPlayer,"susa:trash") == 0 and getElementData(localPlayer,"susa:bus") == 0 then
-
-					outputChatBox("You successfully started the Job",24,255,24)
+					outputChatBox("You successfully started the taxi drivers job. Type /leave to quit from your job.",24,255,24)
 					triggerServerEvent("licence", localPlayer,localPlayer,3,money)
 			else
 				outputChatBox("You already have a Job!",255,24,24)
 			end
 		elseif row == 2 then
 			if getElementData(localPlayer,"susa:trash") == 0  and getElementData(localPlayer,"susa:taxi") ==0 and getElementData(localPlayer,"susa:bus") == 0 then
-
-					outputChatBox("You successfully started the Job",24,255,24)
+					outputChatBox("You successfully started the bus drivers job. Type /leave to quit from your job.",24,255,24)
 					triggerServerEvent("licence", localPlayer,localPlayer,4,money)
 			else
 				outputChatBox("You already have a Job!",255,24,24)
 			end
 		elseif row == 3 then
 			if getElementData(localPlayer,"susa:bus") == 0 and getElementData(localPlayer,"susa:taxi") == 0 and getElementData(localPlayer,"susa:trash") == 0 then
-
-					outputChatBox("You successfully started the Job",24,255,24)
+					outputChatBox("You successfully started the truck drivers job. Type /leave to quit from your job.",24,255,24)
 					triggerServerEvent("licence", localPlayer,localPlayer,5,money)
 			else
 				outputChatBox("You already have a Job!",255,24,24)
@@ -113,7 +110,6 @@ guiSetFont(Town_Hall.button[2], "default-bold-small")
 			if getElementData(localPlayer,"susa:tuning") == 0 or getElementData(localPlayer,"susa:tuning") == false then
 				if getElementData(localPlayer,"susa:d_licence") == 1 then
 					if money >= 8000 then
-
 						local money = money-8000
 						outputChatBox("You successfully bought your tuning licence",24,255,24)
 						triggerServerEvent("licence", localPlayer,localPlayer,6,money)

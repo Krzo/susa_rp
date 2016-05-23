@@ -87,6 +87,7 @@ addEventHandler("onVehicleStartEnter",root,
 				end
 				if owner == username then
 					outputChatBox("Press 'X' for Engine and 'L' for the Lights",plr,0,180,0,false)
+					outputChatBox("Press 'N' to turn your left blinker on and press 'M' to turn on your right blinker. Press 'K' for all 4 blinkers.",plr,0,180,0,false)
 				else
 					cancelEvent()
 					outputChatBox("This is not your car! This car belongs to: "..owner.." .If you already have one use /getmycar !",plr,180,0,0,false)
@@ -152,7 +153,7 @@ addEventHandler("CarBuy",root,CarBuyFunc)
 		function(plr)
 			local veh = getPedOccupiedVehicle(plr)
 			local driver = getPedOccupiedVehicleSeat(plr)
-			if veh and driver then
+			if veh and driver == 0 then
 				if ( getVehicleOverrideLights ( veh ) ~= 2 ) then
 					setVehicleOverrideLights ( veh, 2 )
 					playSoundFrontEnd(plr,38)
@@ -169,7 +170,7 @@ addEventHandler("CarBuy",root,CarBuyFunc)
 		function(plr)
 			local veh = getPedOccupiedVehicle(plr)
 			local driver = getPedOccupiedVehicleSeat(plr)
-			if veh and driver then
+			if veh and driver == 0 then
 				local state = getVehicleEngineState ( veh )
 				setVehicleEngineState ( veh, not state )
 				playSoundFrontEnd(plr,38)

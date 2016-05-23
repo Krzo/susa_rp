@@ -36,11 +36,9 @@ addEventHandler("onClientGUIClick",bus.button[1],
   		guiSetVisible(bus.window[1],false)
   		outputChatBox("You successfully started the Bus job.",0,180,0,false)
   		showCursor(false)
-    else
-      outputChatBox("You already started this job. If you press 'Decline', you'll stop having this job.",255,24,24,false)
     end
 	elseif busjob == 0 then
-		outputChatBox("You didn't select the trashman job. Go to the town hall to select it.",255,24,24,false)
+		outputChatBox("You didn't select the bus driver job. Go to the town hall to select it.",255,24,24,false)
 	end
 end
 )

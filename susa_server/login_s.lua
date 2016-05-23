@@ -22,6 +22,8 @@
 					setElementData(p,"susa:trash",0)
 					setElementData(p,"susa:bus",0)
 					setElementData(p,"susa:tuning",0)
+					setElementData(p,"Best Drift",0)
+					setElementData(p,"Drift Score",0)
 					bindKey(p,"x","down","engine")
 					bindKey(p,"l","down","light")
 					local country = exports.admin:getPlayerCountry(p)
@@ -60,6 +62,8 @@
 					local taxi_licence = datas.taxi_licence or 0
 					local trashman_licence = datas.trashman_licence or 0
 					local tuning_licence = datas.tuning_licence or 0
+					local best_drift = datas.drift_best or 0
+					local drift_points = datas.drift_points or 0
 					setElementData(p,"susa:d_licence",d_licence)
 					setElementData(p,"susa:b_licence",b_licence)
 					setElementData(p,"susa:taxi",taxi_licence)
@@ -67,6 +71,8 @@
 					setElementData(p,"susa:bus",bus_licence)
 					setElementData(p,"susa:tuning",tuning_licence)
 					setElementData(p,"loggedIN",true)
+					setElementData(p,"Best Drift",best_drift)
+					setElementData(p,"Drift Score",drift_points)
 					setElementData(p,"username",string.lower(username))
 					bindKey(p,"x","down","engine")
 					bindKey(p,"l","down","light")
@@ -77,16 +83,7 @@
 					else
 						t = nil
 					end
-					local housequery = dbQuery(db,"SELECT * FROM houses WHERE OWNER=?",username)
-					local houseres = dbPoll(housequery,-1)
-					if houseres and #houseres == 1 then
-						local datas = houseres[1]
-						local hx,hy,hz = datas.X,datas.Y,datas.Z
-						spawnPlayer(p,hx,hy,hz,0,skin,inte,0)
-						dbFree(housequery)
-					else
-						spawnPlayer(p,x,y,z,0,skin,inte,0)
-					end
+					spawnPlayer(p,x,y,z,0,skin,inte,0)
 					triggerClientEvent(p,"saveLoginToXML",getRootElement(),username,password)
 					local name = string.gsub(getPlayerName(p), "#%x%x%x%x%x%x", "")
 					outputChatBox("You succcessfully logged in. Welcome, "..name.."",p,24,255,24)
@@ -118,7 +115,8 @@
 			local d_licence,b_licence = getElementData(source,"susa:d_licence"),getElementData(source,"susa:b_licence")
 			local t,tr,b = getElementData(source,"susa:taxi"),getElementData(source,"susa:trash"),getElementData(source,"bus")
 			local tune = getElementData(source,"susa:tuning")
-			dbExec(db, "UPDATE accounts SET x=?, y=?, z=?, skin=?, inte=?, dim=?, money=?,d_licence=?,b_licence=?,taxi_licence=?,trashman_licence=?,bus_licence=?,tuning_licence=? WHERE username=?", x, y, z, skin,inte,dim,money,d_licence,b_licence,t,tr,b,tune, username )
+			local d_p,d_b = getElementData(v, "Drift Score" ) ,getElementData(v, "Drift Score" )
+			dbExec(db, "UPDATE accounts SET x=?, y=?, z=?, skin=?, inte=?, dim=?, money=?,d_licence=?,b_licence=?,taxi_licence=?,trashman_licence=?,bus_licence=?,tuning_licence=?,drift_points=?,drift_best=? WHERE username=?", x, y, z, skin,inte,dim,money,d_licence,b_licence,t,tr,b,tune,d_p,d_b, username )
 		end
 	end
 	addEventHandler ("onPlayerQuit", root, onQuit)
@@ -135,8 +133,17 @@
 				local d_licence,b_licence = getElementData(v,"susa:d_licence"),getElementData(v,"susa:b_licence")
 				local t,tr,b = getElementData(v,"susa:taxi"),getElementData(v,"susa:trash"),getElementData(v,"bus")
 				local tune = getElementData(v,"susa:tuning")
-				dbExec(db, "UPDATE accounts SET x=?, y=?, z=?, skin=?, inte=?, dim=?, money=?,d_licence=?,b_licence=?,taxi_licence=?,trashman_licence=?,bus_licence=?,tuning_licence=? WHERE username=?", x, y, z, skin,inte,dim,money,d_licence,b_licence,t,tr,b,tune, username )
+				local d_p,d_b = getElementData(v, "Drift Score" ),getElementData(v, "Drift Score" )
+				dbExec(db, "UPDATE accounts SET x=?, y=?, z=?, skin=?, inte=?, dim=?, money=?,d_licence=?,b_licence=?,taxi_licence=?,trashman_licence=?,bus_licence=?,tuning_licence=?,drift_points=?,drift_best=? WHERE username=?", x, y, z, skin,inte,dim,money,d_licence,b_licence,t,tr,b,tune,d_p,d_b, username )
 			end
 		end
 	end
 	addEventHandler ("onResourceStop", resourceRoot, onStop)
+
+function updateStats()
+for i, v in ipairs(getElementsByType("player")) do
+local money = getPlayerMoney ( v )
+setElementData ( v,  "money", money )
+end
+end
+setTimer(updateStats, 10000, 0)

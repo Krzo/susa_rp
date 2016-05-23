@@ -108,8 +108,16 @@ addEventHandler("StartJobTrash",root,function(plr)
 				setElementData(plr,"startJob",false)
 			end
 	end)
+	addEventHandler("onVehicleExit",trucker_marker[pname],
+		function(plr,seat)
+		if seat == 0 then
+			setTimer(setElementPosition,50,1,plr,-2129.3664550781, -237.04539489746, 38.3203125)
+			setTimer(outputChatBox,50,1,"Your job has been canceled, you have been warped to the taxi base.",plr,255,24,24,false)
+			setTimer(destroyElement,50,1,trucker_marker[pname])
+			setTimer(destroyElement,50,1,trucker_blip[pname])
+			setTimer(destroyElement,50,1,trucker_vehicle[pname])
+			setTimer(destroyElement,50,1,trucker_trailer[pname])
+			setElementData(plr,"startJob",false)
+		end
+	end)
 end)
-function reattachTrailer(theTruck)
-    attachTrailerToVehicle(theTruck, source)
-end
-addEventHandler("onTrailerDetach", getRootElement(), reattachTrailer)

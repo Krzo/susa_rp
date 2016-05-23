@@ -30,3 +30,12 @@
 	end
 	addEvent("licence",true)
 	addEventHandler("licence",root,saving)
+
+	addCommandHandler("leave",
+	 function(plr)
+		 setElementData(plr,"susa:taxi",0)
+		 setElementData(plr,"susa:bus",0)
+		 setElementData(plr,"susa:trash",0)
+		 outputChatBox("You successfully quit your job. Now you can accept other jobs.",plr,0,180,0,false)
+	 end
+)
